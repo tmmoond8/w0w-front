@@ -1,4 +1,4 @@
-import { Container, Box } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 
 interface Props {
   children: React.ReactNode;
@@ -7,6 +7,7 @@ interface Props {
 export default function Layout({ children }: Props) {
   return (
     <Box
+      as="main"
       display="flex"
       flexDirection="column"
       position="fixed"
@@ -20,7 +21,6 @@ export default function Layout({ children }: Props) {
       minH="600px"
       maxW="460px"
       maxH="1080"
-      bgColor="darkcyan"
     >
       {children}
     </Box>
