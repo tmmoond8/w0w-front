@@ -1,14 +1,27 @@
 import React from 'react';
 import * as C from '@chakra-ui/react';
+import { QuizSet, StrpItem } from 'src/types';
 
-const sample = '카,운,터,도,없,는';
+interface Props {
+  quizSet: StrpItem<QuizSet>;
+}
 
-export default function Quiz() {
+export default function Quiz({ quizSet }: Props) {
   const [input, setInput] = React.useState('');
-  const [noAnswer, setNoAnswer] = React.useState(false);
+  const [status, setStatus] = React.useState<null | 'OK' | 'NO'>(null);
+  const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 0);
+  const { id, attributes } = quizSet;
+  const { quizzes } = attributes;
+
+  const currentQuiz = React.useMemo(() => {
+    return {
+      ...quizzes.data[quizIndex].attributes,
+      id: quizzes.data[quizIndex].id,
+    };
+  }, [quizIndex, quizzes]);
 
   const handleClickSyllable = (syllable: string) => {
-    if (noAnswer) {
+    if (status) {
       return;
     }
     const value = input + syllable;
@@ -18,15 +31,18 @@ export default function Quiz() {
     // 정답이면 next,
     // 오답이면 noAnswer
     if (value.length >= 3) {
-      setNoAnswer(true);
+      setStatus(value === currentQuiz.answer ? 'OK' : 'NO');
     }
   };
 
   React.useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
-    if (noAnswer) {
+    if (status) {
       timer = setTimeout(() => {
-        setNoAnswer(false);
+        if (status === 'OK') {
+          nextQuiz();
+        }
+        setStatus(null);
         setInput('');
       }, 500);
     }
@@ -34,7 +50,7 @@ export default function Quiz() {
     return () => {
       clearTimeout(timer);
     };
-  }, [noAnswer]);
+  }, [status]);
 
   return (
     <C.Box flex="1" p="0 16px">
@@ -48,7 +64,7 @@ export default function Quiz() {
             fontSize="20px"
             textAlign="center"
             lineHeight="42px"
-            color={noAnswer ? '#f79aba' : '#222'}
+            color={status === 'OK' || status === 'NO' ? '#f79aba' : '#222'}
           >
             {input[index]}
           </C.Text>
@@ -62,7 +78,7 @@ export default function Quiz() {
         m="0 auto"
         gap="10px"
       >
-        {sample.split(',').map((syllable) => (
+        {currentQuiz.syllables.split(',').map((syllable) => (
           <C.GridItem key={syllable} w="60px" h="60px">
             <C.Button
               w="100%"

@@ -9,10 +9,10 @@ import {
   Intro,
 } from 'src/components';
 import APIS from 'src/apis';
-import { QuizSet } from 'src/types';
+import { QuizSet, StrpItem } from 'src/types';
 import ENVS from 'src/libs/envs';
 
-export default function QuizPage({ quizSet }: { quizSet: QuizSet }) {
+export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
   const [step, setStep] = React.useState(2);
   const next = () => {
     setStep((prev) => prev + 1);
@@ -25,10 +25,10 @@ export default function QuizPage({ quizSet }: { quizSet: QuizSet }) {
       <Header />
       {step == 0 && <Intro next={next} />}
       {step == 1 && <NicknameInput next={next} />}
-      {step == 2 && <Quiz />}
+      {step == 2 && quizSet && <Quiz quizSet={quizSet} />}
       <Meta
-        title={quizSet.ogTitle}
-        description={quizSet.ogDescription}
+        title={quizSet.attributes.ogTitle}
+        description={quizSet.attributes.ogDescription}
         url={`${ENVS.NEXT_PUBLIC_URL}/q/${slug}`}
       />
       <Footer />

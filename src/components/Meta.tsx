@@ -1,44 +1,36 @@
 import React from 'react';
 import Head from 'next/head';
+import ENVS from 'src/libs/envs';
 
 interface Props {
   title?: string;
   description?: string;
   url?: string;
-  tags?: string[];
   image?: string;
 }
 
-export default function TlogHead({
-  title,
-  description,
-  tags,
-  image,
-  url = 'https://https://w0w.tammolo.com',
+export default function Meta({
+  title = '우영우 게임',
+  description = '똑바로 읽어도 거꾸로 읽어도 우영우 게임',
+  image = 'https://w.namu.la/s/d519bbe427905a130fcdc33f50b8fc510ad4f26a80f13c1acf7bec38cc0ad365c84ce241e346b840c399cc9cc9dd7c1aa081ee6d2f821bdf91946425962be1ac59c82845031bb1e525270783ad5d07f807432d540ceb27a88d14d121c5e9bd8e',
+  url = ENVS.NEXT_PUBLIC_URL,
 }: Props) {
-  const metaTitle = title ? `${title} - Tlog` : 'Tlog';
-  let metaDescription = description || "Tamm's dev log";
-  const metaImage =
-    image ||
-    'https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1632454834/tlog/Tlog_uwiiop.png';
   let metaFavicon = '/favicon.ico';
-  if (tags && tags.length > 0) {
-    metaDescription += ` (${tags.join(', ')})`;
-  }
+
   return (
     <Head>
       <meta charSet="utf-8" />
-      <title>{metaTitle}</title>
-      <meta name="description" content={metaDescription} />
-      <meta property="og:title" content={metaTitle} />
-      <meta property="og:description" content={metaDescription} />
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
       <meta property="og:type" content="website" />
-      <meta property="og:image" content={metaImage} />
+      <meta property="og:image" content={image} />
       <meta property="og:url" content={url} />
       <meta name="twitter:card" content="summary" />
       <meta name="twitter:creator" content="Tamm" />
-      <meta name="twitter:title" content={metaTitle} />
-      <meta name="twitter:description" content={metaDescription} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
       <meta
         name="google-site-verification"
         content="PIRsHmgoZCLzu2POg5y_DUts70ScOpV2oLVfpIpFmYg"
