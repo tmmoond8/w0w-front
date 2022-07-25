@@ -1,6 +1,9 @@
 import React from 'react';
 import * as C from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 import { QuizSet, StrpItem } from 'src/types';
+import APIS from 'src/apis';
+import storage from 'src/libs/storage';
 
 interface Props {
   quizSet: StrpItem<QuizSet>;
@@ -11,6 +14,7 @@ export default function Quiz({ quizSet }: Props) {
   const [status, setStatus] = React.useState<null | 'OK' | 'NO'>(null);
   const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 0);
   const [progress, setProgress] = React.useState(100);
+  const router = useRouter();
 
   const quizzes = React.useMemo(() => {
     const _quizzes = [...quizSet.attributes.quizzes.data];
@@ -61,8 +65,13 @@ export default function Quiz({ quizSet }: Props) {
 
   React.useEffect(() => {
     setProgress(0);
-    const timer = setTimeout(() => {
-      alert('end');
+    const timer = setTimeout(async () => {
+      const { data } = await APIS.result.create({
+        quizId: quizSet.id,
+        nickname: storage.getNickname() as string,
+        score: quizIndex,
+      });
+      router.push(`/r/${data.data.id}`);
     }, 60 * 1000);
     return () => {
       clearTimeout(timer);
@@ -84,12 +93,6 @@ export default function Quiz({ quizSet }: Props) {
           },
         }}
         value={progress}
-
-        // __css={{
-        //   div: {
-        //     transition: 'width 10s ease-in',
-        //   },
-        // }}
       />
       <C.Flex justifyContent="center" gap="0 8px">
         {Array.from({ length: 3 }).map((_, index) => (

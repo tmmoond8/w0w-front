@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import type { QuizSet, StrpList } from '../types';
+import type { QuizResult, QuizSet, StrpList, GetResponse } from '../types';
 import ENVS from 'src/libs/envs';
 
 const apiConfig = {
@@ -34,9 +34,15 @@ const http = {
 
 const apis = {
   quizSet: {
-    get: (id: number | string) =>
-      http.get<StrpList<QuizSet>>(`/api/quiz-sets/${id}?populate=*`),
+    get: (id: number | string): GetResponse<QuizSet> =>
+      http.get(`/api/quiz-sets/${id}?populate=*`),
     all: () => http.get<StrpList<QuizSet>>(`/api/quiz-sets`),
+  },
+  result: {
+    get: (id: number | string): GetResponse<QuizResult> =>
+      http.get(`/api/results/${id}`),
+    create: (data: Pick<QuizResult, 'quizId' | 'nickname' | 'score'>) =>
+      http.post(`/api/results`, { data }),
   },
 };
 

@@ -1,3 +1,7 @@
+export type GetResponse<T> = Promise<{
+  data: StrpItem<T>;
+}>;
+
 export interface StrpMeta {
   pagination: {
     page: number;
@@ -41,4 +45,13 @@ export interface QuizSet {
   updatedAt: string;
   publishedAt: string;
   quizzes: StrpInnerList<Quiz>;
+}
+
+export interface QuizResult {
+  quizId: number;
+  nickname: string;
+  score: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
