@@ -10,13 +10,23 @@ export default function Quiz({ quizSet }: Props) {
   const [input, setInput] = React.useState('');
   const [status, setStatus] = React.useState<null | 'OK' | 'NO'>(null);
   const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 0);
-  const { id, attributes } = quizSet;
-  const { quizzes } = attributes;
+  const [progress, setProgress] = React.useState(100);
+
+  const quizzes = React.useMemo(() => {
+    const _quizzes = [...quizSet.attributes.quizzes.data];
+    _quizzes.sort((a, b) => a.attributes.weight - b.attributes.weight);
+    return _quizzes;
+  }, [quizSet]);
 
   const currentQuiz = React.useMemo(() => {
+    const syllables = quizzes[quizIndex].attributes.syllables.split(',');
+    if (quizIndex > 5) {
+      syllables.sort(() => (Math.random() > 0.5 ? 1 : -1));
+    }
     return {
-      ...quizzes.data[quizIndex].attributes,
-      id: quizzes.data[quizIndex].id,
+      ...quizzes[quizIndex].attributes,
+      id: quizzes[quizIndex].id,
+      syllables,
     };
   }, [quizIndex, quizzes]);
 
@@ -27,9 +37,6 @@ export default function Quiz({ quizSet }: Props) {
     const value = input + syllable;
     setInput(value);
 
-    // 정답 체크,
-    // 정답이면 next,
-    // 오답이면 noAnswer
     if (value.length >= 3) {
       setStatus(value === currentQuiz.answer ? 'OK' : 'NO');
     }
@@ -52,8 +59,38 @@ export default function Quiz({ quizSet }: Props) {
     };
   }, [status]);
 
+  React.useEffect(() => {
+    setProgress(0);
+    const timer = setTimeout(() => {
+      alert('end');
+    }, 60 * 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
   return (
     <C.Box flex="1" p="0 16px">
+      <C.Progress
+        size="sm"
+        __css={{
+          bgColor: '#eee',
+          margin: '0 -16px',
+          height: '4px',
+          width: 'calc(100% + 32px)',
+          '& > div': {
+            transition: 'width 60s linear',
+            backgroundColor: '#f79aba',
+          },
+        }}
+        value={progress}
+
+        // __css={{
+        //   div: {
+        //     transition: 'width 10s ease-in',
+        //   },
+        // }}
+      />
       <C.Flex justifyContent="center" gap="0 8px">
         {Array.from({ length: 3 }).map((_, index) => (
           <C.Text
@@ -72,13 +109,13 @@ export default function Quiz({ quizSet }: Props) {
       </C.Flex>
       <C.Box h="20px" />
       <C.Grid
-        templateRows="repeat(2, 1fr)"
-        templateColumns="repeat(3, 1fr)"
-        maxW="200px"
+        templateColumns={`repeat(${currentQuiz.syllables.length / 2}, 60px)`}
+        justifyContent="center"
         m="0 auto"
+        p="0 24px"
         gap="10px"
       >
-        {currentQuiz.syllables.split(',').map((syllable) => (
+        {currentQuiz.syllables.map((syllable) => (
           <C.GridItem key={syllable} w="60px" h="60px">
             <C.Button
               w="100%"

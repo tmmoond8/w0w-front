@@ -28,6 +28,7 @@ export interface Quiz {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+  weight: number;
 }
 
 export interface QuizSet {
