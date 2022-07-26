@@ -4,16 +4,11 @@ import NextImage from 'next/image';
 import * as C from '@chakra-ui/react';
 import APIS from 'src/apis';
 import type { QuizResult, QuizSet } from 'src/types';
-import {
-  Header,
-  Meta,
-  Footer,
-  ShareButton,
-  FeedbackMessage,
-} from 'src/components';
+import { Header, Meta, ShareButton, FeedbackMessage } from 'src/components';
 import resultImages from 'src/assets/result';
 import resultBackground from 'src/assets/result_bg.jpg';
 import { useRouter } from 'next/router';
+import storage from 'src/libs/storage';
 
 interface Props {
   quizResult: QuizResult;
@@ -22,12 +17,17 @@ interface Props {
 
 export default function ResultPage({ quizResult, quizSet }: Props) {
   const router = useRouter();
+  const [nickname, setNickname] = React.useState('');
 
   React.useEffect(() => {
     if (quizResult === null) {
       router.replace('/');
     }
   }, [quizResult]);
+
+  React.useEffect(() => {
+    setNickname(storage.getNickname() ?? '');
+  }, []);
 
   if (!quizResult || !quizSet) {
     return null;
@@ -36,8 +36,8 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
     <>
       <Header />
       <Meta
-        title={`${quizResult.nickname} 님의 우영우 게임 점수는 ${quizResult.score}`}
-        description={`똑바로 읽어도 거꾸로 읽어도 우영우 게임`}
+        title={`${quizResult.nickname} 님의 우영우 게임 결과는 ${quizResult.score}개`}
+        description={`${quizResult.nickname} 님보다 더 많이 맞힐 수 있다면 도전!!!`}
         image={resultImages[quizResult.score].src}
       />
       <C.Box
@@ -56,7 +56,7 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
           objectFit="cover"
         />
       </C.Box>
-      <C.Center flexDirection="column" h="calc(80vh - 60px)" p="16px">
+      <C.Center flexDirection="column" h="calc(100vh - 60px)" p="16px">
         <C.Flex
           flexDirection="column"
           border="2px white solid"
@@ -110,8 +110,15 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
             우영우 게임 공유하기
           </ShareButton>
         </C.Flex>
+        <C.Button
+          w="100%"
+          maxW="300px"
+          mt="12px"
+          onClick={() => router.replace(`/q/${quizResult.quizId}`)}
+        >
+          {nickname ? '다시하기' : ' 나도 해보기'}
+        </C.Button>
       </C.Center>
-      <Footer />
     </>
   );
 }

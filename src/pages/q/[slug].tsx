@@ -12,9 +12,10 @@ import {
 import APIS from 'src/apis';
 import { QuizSet, StrpItem } from 'src/types';
 import ENVS from 'src/libs/envs';
+import storage from 'src/libs/storage';
 
 export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
-  const [step, setStep] = React.useState(0);
+  const [step, setStep] = React.useState(storage.getNickname() ? 1 : 0);
   const next = () => {
     setStep((prev) => prev + 1);
   };

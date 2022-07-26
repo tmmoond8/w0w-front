@@ -9,7 +9,7 @@ import result07 from './07.jpeg';
 import result08 from './08.jpeg';
 import result09 from './09.jpeg';
 import result10 from './10.jpeg';
-import result11 from './11.jpeg';
+import result11 from './11.webp';
 import result12 from './12.webp';
 import result13 from './13.jpg';
 import result14 from './14.jpeg';
