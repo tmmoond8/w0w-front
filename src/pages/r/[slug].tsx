@@ -4,7 +4,13 @@ import NextImage from 'next/image';
 import * as C from '@chakra-ui/react';
 import APIS from 'src/apis';
 import type { QuizResult, QuizSet } from 'src/types';
-import { Header, Meta, Footer } from 'src/components';
+import {
+  Header,
+  Meta,
+  Footer,
+  ShareButton,
+  FeedbackMessage,
+} from 'src/components';
 import resultImages from 'src/assets/result';
 import resultBackground from 'src/assets/result_bg.jpg';
 import { useRouter } from 'next/router';
@@ -30,7 +36,7 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
     <>
       <Header />
       <Meta
-        title={`${quizResult.nickname} 님의 우영우 게임 결과는?`}
+        title={`${quizResult.nickname} 님의 우영우 게임 점수는 ${quizResult.score}`}
         description={`똑바로 읽어도 거꾸로 읽어도 우영우 게임`}
         image={resultImages[quizResult.score].src}
       />
@@ -50,7 +56,7 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
           objectFit="cover"
         />
       </C.Box>
-      <C.Center h="calc(80vh - 60px)" p="16px">
+      <C.Center flexDirection="column" h="calc(80vh - 60px)" p="16px">
         <C.Flex
           flexDirection="column"
           border="2px white solid"
@@ -58,7 +64,7 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
           borderRadius="22px"
           w="100%"
           maxW="300px"
-          maxH="400px"
+          maxH="360px"
           overflow="hidden"
         >
           <C.Box
@@ -71,7 +77,7 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
             <NextImage
               src={resultImages[quizResult.score]}
               width="300px"
-              height="220px"
+              height="180px"
               objectFit="cover"
             />
           </C.Box>
@@ -82,12 +88,27 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
               </C.Text>
               님의 우영우 게임 결과는?
             </C.Text>
-            <C.Center flex="1">
+            <C.Center flex="1" maxH="90px">
               <C.Text textAlign="center" fontSize="52px">
                 {quizResult.score}개
               </C.Text>
             </C.Center>
+            <FeedbackMessage score={quizResult.score} />
           </C.Flex>
+        </C.Flex>
+        <C.Flex w="300px" gap="0 8px" mt="6vh">
+          <ShareButton
+            text={`${quizResult.nickname} 님의 우영우 게임 점수는 ${quizResult.score}`}
+            url={globalThis.location?.href}
+          >
+            점수 자랑하기
+          </ShareButton>
+          <ShareButton
+            text={quizSet.ogTitle}
+            url={`${globalThis.location?.origin}/q/${quizResult.quizId}`}
+          >
+            우영우 게임 공유하기
+          </ShareButton>
         </C.Flex>
       </C.Center>
       <Footer />
