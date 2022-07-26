@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import * as C from '@chakra-ui/react';
 import {
   Header,
   Footer,
@@ -23,15 +24,17 @@ export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
   return (
     <>
       <Header />
-      {step == 0 && <Intro next={next} />}
-      {step == 1 && <NicknameInput next={next} />}
-      {step == 2 && quizSet && <Quiz quizSet={quizSet} />}
+      <C.Box flex="1" overflow="hidden">
+        {step == 0 && <Intro next={next} />}
+        {step == 1 && <NicknameInput next={next} />}
+        {step == 2 && quizSet && <Quiz quizSet={quizSet} />}
+      </C.Box>
       <Meta
         title={quizSet.attributes.ogTitle}
         description={quizSet.attributes.ogDescription}
         url={`${ENVS.NEXT_PUBLIC_URL}/q/${slug}`}
       />
-      <Footer />
+      {step == 0 && <Footer />}
     </>
   );
 }

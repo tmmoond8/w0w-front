@@ -20,7 +20,7 @@ export default function Layout({ children }: Props) {
       h="100%"
       minH="600px"
       maxW="460px"
-      maxH="1080"
+      maxH="896px"
     >
       {children}
     </Box>

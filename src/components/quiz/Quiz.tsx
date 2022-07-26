@@ -14,6 +14,7 @@ export default function Quiz({ quizSet }: Props) {
   const [status, setStatus] = React.useState<null | 'OK' | 'NO'>(null);
   const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 0);
   const [progress, setProgress] = React.useState(100);
+  const [timeOver, setTimeOver] = React.useState(false);
   const router = useRouter();
 
   const quizzes = React.useMemo(() => {
@@ -65,21 +66,30 @@ export default function Quiz({ quizSet }: Props) {
 
   React.useEffect(() => {
     setProgress(0);
-    const timer = setTimeout(async () => {
-      const { data } = await APIS.result.create({
-        quizId: quizSet.id,
-        nickname: storage.getNickname() as string,
-        score: quizIndex,
-      });
-      router.push(`/r/${data.data.id}`);
+    const timer = setTimeout(() => {
+      setTimeOver(true);
     }, 60 * 1000);
     return () => {
       clearTimeout(timer);
     };
   }, []);
 
+  React.useEffect(() => {
+    if (timeOver) {
+      APIS.result
+        .create({
+          quizId: quizSet.id,
+          nickname: storage.getNickname() as string,
+          score: quizIndex,
+        })
+        .then(({ data }) => {
+          router.push(`/r/${data.data.id}`);
+        });
+    }
+  }, [timeOver]);
+
   return (
-    <C.Box flex="1" p="0 16px">
+    <C.Box flex="1" p="0 16px" h="100%">
       <C.Progress
         size="sm"
         __css={{
@@ -94,42 +104,44 @@ export default function Quiz({ quizSet }: Props) {
         }}
         value={progress}
       />
-      <C.Flex justifyContent="center" gap="0 8px">
-        {Array.from({ length: 3 }).map((_, index) => (
-          <C.Text
-            w="40px"
-            key={index}
-            h="40px"
-            borderBottom="2px solid #f79aba"
-            fontSize="20px"
-            textAlign="center"
-            lineHeight="42px"
-            color={status === 'OK' || status === 'NO' ? '#f79aba' : '#222'}
-          >
-            {input[index]}
-          </C.Text>
-        ))}
-      </C.Flex>
-      <C.Box h="20px" />
-      <C.Grid
-        templateColumns={`repeat(${currentQuiz.syllables.length / 2}, 60px)`}
-        justifyContent="center"
-        m="0 auto"
-        p="0 24px"
-        gap="10px"
-      >
-        {currentQuiz.syllables.map((syllable) => (
-          <C.GridItem key={syllable} w="60px" h="60px">
-            <C.Button
-              w="100%"
-              h="100%"
-              onClick={() => handleClickSyllable(syllable)}
+      <C.Center flexDirection="column" h="100%">
+        <C.Flex justifyContent="center" gap="0 8px">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <C.Text
+              w="40px"
+              key={index}
+              h="40px"
+              borderBottom="2px solid #f79aba"
+              fontSize="20px"
+              textAlign="center"
+              lineHeight="42px"
+              color={status === 'OK' || status === 'NO' ? '#f79aba' : '#222'}
             >
-              {syllable}
-            </C.Button>
-          </C.GridItem>
-        ))}
-      </C.Grid>
+              {input[index]}
+            </C.Text>
+          ))}
+        </C.Flex>
+        <C.Box h="80px" />
+        <C.Grid
+          templateColumns={`repeat(${currentQuiz.syllables.length / 2}, 60px)`}
+          justifyContent="center"
+          m="0 auto"
+          p="0 24px"
+          gap="10px"
+        >
+          {currentQuiz.syllables.map((syllable) => (
+            <C.GridItem key={syllable} w="60px" h="60px">
+              <C.Button
+                w="100%"
+                h="100%"
+                onClick={() => handleClickSyllable(syllable)}
+              >
+                {syllable}
+              </C.Button>
+            </C.GridItem>
+          ))}
+        </C.Grid>
+      </C.Center>
     </C.Box>
   );
 }

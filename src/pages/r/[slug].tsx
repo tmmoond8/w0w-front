@@ -55,7 +55,7 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
           flexDirection="column"
           border="2px white solid"
           h="100%"
-          borderRadius="44px"
+          borderRadius="22px"
           w="100%"
           maxW="300px"
           maxH="400px"
