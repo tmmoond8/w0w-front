@@ -13,7 +13,7 @@ import { QuizSet, StrpItem } from 'src/types';
 import ENVS from 'src/libs/envs';
 
 export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
-  const [step, setStep] = React.useState(2);
+  const [step, setStep] = React.useState(0);
   const next = () => {
     setStep((prev) => prev + 1);
   };
