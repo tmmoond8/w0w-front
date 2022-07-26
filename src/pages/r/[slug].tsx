@@ -1,4 +1,5 @@
 import React from 'react';
+import { GetServerSidePropsContext } from 'next';
 import NextImage from 'next/image';
 import * as C from '@chakra-ui/react';
 import APIS from 'src/apis';
@@ -6,6 +7,7 @@ import type { QuizResult, QuizSet } from 'src/types';
 import { Header, Meta, Footer } from 'src/components';
 import resultImages from 'src/assets/result';
 import resultBackground from 'src/assets/result_bg.jpg';
+import { useRouter } from 'next/router';
 
 interface Props {
   quizResult: QuizResult;
@@ -13,6 +15,17 @@ interface Props {
 }
 
 export default function ResultPage({ quizResult, quizSet }: Props) {
+  const router = useRouter();
+
+  React.useEffect(() => {
+    if (quizResult === null) {
+      router.replace('/');
+    }
+  }, [quizResult]);
+
+  if (!quizResult || !quizSet) {
+    return null;
+  }
   return (
     <>
       <Header />
@@ -82,10 +95,20 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({
+  params,
+}: GetServerSidePropsContext<{ slug: string }>) {
+  if (!params?.slug) {
+    return {
+      props: {
+        quizResult: null,
+        quizSet: null,
+      },
+    };
+  }
   const {
     data: { attributes: quizResult },
-  } = await APIS.result.get(13);
+  } = await APIS.result.get(parseInt(params.slug));
   const {
     data: { attributes: quizSet },
   } = await APIS.quizSet.get(quizResult.quizId);
