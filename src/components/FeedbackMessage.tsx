@@ -8,7 +8,7 @@ export default function FeedbackMessage({ score, ...props }: Props) {
   const message = useFeedbackMessage(score);
   return (
     <C.Text px="16px" textAlign="center" {...props}>
-      "{message}"
+      &quot;{message}&quot;
     </C.Text>
   );
 }

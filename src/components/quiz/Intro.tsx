@@ -1,6 +1,6 @@
 import React from 'react';
 import NextImage from 'next/image';
-import { Buttons, Logo, ExternalLink, ShareButton } from 'src/components';
+import { Buttons, Logo, ShareButton } from 'src/components';
 import mainImage from 'src/assets/main.png';
 import * as C from '@chakra-ui/react';
 
@@ -69,7 +69,7 @@ export default function Intro({
           colorScheme="gray"
           borderColor="rgba(0,0,0, 0.3)"
           text="똑바로 읽어도 거꾸로 읽어도 우영우 게임"
-          url={globalThis.location?.href}
+          url={url}
         >
           친구에게 공유
         </ShareButton>
