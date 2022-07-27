@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import Script from 'next/script';
 
 export default class MyDocument extends Document {
   render() {
@@ -10,14 +9,13 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Gamja+Flower:400"
             rel="stylesheet"
           />
-          <Script
+          <script
             id="ga-tag"
             async
             src="https://www.googletagmanager.com/gtag/js?id=G-2V7C7VZQ6C"
-          ></Script>
-          <Script
+          ></script>
+          <script
             id="G-2V7C7VZQ6C"
-            strategy="afterInteractive"
             dangerouslySetInnerHTML={{
               __html: `
             window.dataLayer = window.dataLayer || [];
@@ -28,10 +26,12 @@ export default class MyDocument extends Document {
             }
             gtag('js', new Date());
 
-            gtag('config', 'G-2V7C7VZQ6C');
+            gtag('config', 'G-2V7C7VZQ6C', {
+              page_path: window.location.pathname
+            });
             `,
             }}
-          ></Script>
+          ></script>
         </Head>
         <body>
           <Main />
