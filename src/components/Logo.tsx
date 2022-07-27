@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import * as C from '@chakra-ui/react';
 import { css } from '@emotion/react';
 
 interface Props {
