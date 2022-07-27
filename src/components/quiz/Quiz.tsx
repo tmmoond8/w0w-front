@@ -19,7 +19,7 @@ export default function Quiz({ quizSet }: Props) {
 
   const [input, setInput] = React.useState('');
   const [status, setStatus] = React.useState<null | 'OK' | 'NO'>(null);
-  const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 0);
+  const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 12);
   const [progress, setProgress] = React.useState(100);
   const [timeOver, setTimeOver] = React.useState(false);
   const timerRefs = React.useRef<{
@@ -38,7 +38,12 @@ export default function Quiz({ quizSet }: Props) {
 
   const currentQuiz = React.useMemo(() => {
     const index = Math.min(quizIndex, quizzes.length - 1);
-    const syllables = quizzes[index].attributes.syllables.split(',');
+    const syllables = quizzes[index].attributes.syllables
+      .split(',')
+      .map((value) => ({
+        key: (Math.random() * 1234).toString(36),
+        value,
+      }));
     if (index > 5) {
       syllables.sort(() => (Math.random() > 0.5 ? 1 : -1));
     }
@@ -120,6 +125,8 @@ export default function Quiz({ quizSet }: Props) {
         });
     }
   }, [timeOver]);
+
+  console.log('currentQuiz', currentQuiz.syllables);
 
   return (
     <C.Flex display="flex" flexDirection="column" flex="1" h="100%">
@@ -203,8 +210,8 @@ export default function Quiz({ quizSet }: Props) {
           p="0 12px"
           gap="10px"
         >
-          {currentQuiz.syllables.map((syllable) => (
-            <C.GridItem key={syllable} w="60px" h="60px">
+          {currentQuiz.syllables.map(({ key, value }) => (
+            <C.GridItem key={key} w="60px" h="60px">
               <C.Button
                 w="100%"
                 h="100%"
@@ -217,9 +224,9 @@ export default function Quiz({ quizSet }: Props) {
                 _active={{
                   bgColor: '#D1C6C2',
                 }}
-                onClick={() => handleClickSyllable(syllable)}
+                onClick={() => handleClickSyllable(value)}
               >
-                {syllable}
+                {value}
               </C.Button>
             </C.GridItem>
           ))}
