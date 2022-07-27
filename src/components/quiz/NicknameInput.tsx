@@ -2,6 +2,7 @@ import React from 'react';
 import * as C from '@chakra-ui/react';
 import { Buttons, Header } from 'src/components';
 import storage from 'src/libs/storage';
+import ga from 'src/libs/ga';
 
 export default function NicknameInput({ next }: { next: () => void }) {
   const [nickname, setNickname] = React.useState(storage.getNickname() ?? '');
@@ -42,6 +43,9 @@ export default function NicknameInput({ next }: { next: () => void }) {
             }
             storage.setNickname(nickname);
             next();
+            ga.sendEvent('complete nickname', {
+              nickname,
+            });
           }}
         >
           입력완료

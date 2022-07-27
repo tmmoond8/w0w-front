@@ -12,6 +12,11 @@ const pageView = (url: string) => {
   });
 };
 
+const sendEvent = (eventName: string, value: Record<string, any>) => {
+  window.gtag('event', eventName, value);
+};
+
 export default {
   pageView,
+  sendEvent,
 };

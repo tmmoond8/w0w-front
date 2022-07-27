@@ -3,6 +3,8 @@ import NextImage from 'next/image';
 import { Buttons, Logo, ShareButton } from 'src/components';
 import mainImage from 'src/assets/main.png';
 import * as C from '@chakra-ui/react';
+import ga from 'src/libs/ga';
+import storage from 'src/libs/storage';
 
 export default function Intro({
   next,
@@ -11,6 +13,8 @@ export default function Intro({
   url: string;
   next: () => void;
 }) {
+  const nickname = storage.getNickname();
+
   return (
     <C.Flex
       as="div"
@@ -59,7 +63,12 @@ export default function Intro({
         <Buttons.CTA
           w="100%"
           mt="24px"
-          onClick={next}
+          onClick={() => {
+            next();
+            ga.sendEvent('start game', {
+              nickname,
+            });
+          }}
           fontFamily="'Gamja Flower'"
         >
           게임 시작
