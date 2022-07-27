@@ -17,6 +17,7 @@ export default function ExternalLink({ url, children, ...props }: Props) {
           height: '100%',
         },
       }}
+      m="0 !important"
     >
       <a
         href={`${ENVS.NEXT_PUBLIC_URL}/l?url=${encodeURIComponent(url)}`}

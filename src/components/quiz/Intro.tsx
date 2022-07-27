@@ -1,40 +1,52 @@
 import React from 'react';
 import NextImage from 'next/image';
-import { Buttons } from 'src/components';
-import mainImage from 'src/assets/main.jpeg';
+import { Buttons, Logo } from 'src/components';
+import mainImage from 'src/assets/main.png';
 import * as C from '@chakra-ui/react';
 
 export default function Intro({ next }: { next: () => void }) {
   return (
     <C.Flex as="div" flexDirection="column" position="relative">
       <C.Box
-        maxW="400px"
+        maxW="500px"
         height="auto"
         margin="0 auto"
         position="relative"
         top="-40px"
+        __css={{
+          img: {
+            top: '40px !important',
+          },
+        }}
       >
-        <NextImage src={mainImage} width="400px" height="573px" />
+        <NextImage src={mainImage} width="500px" height="670px" />
       </C.Box>
-      <C.Box position="absolute" w="100%" top="40%">
-        <Buttons.CTA
-          w="calc(100% - 80px)"
-          colorScheme="pink"
-          onClick={next}
-          mx="40px"
-        >
+      <C.Box
+        position="absolute"
+        p="20px 24px 0"
+        w="100%"
+        bottom="0"
+        bgColor="white"
+        borderTopLeftRadius="8px"
+        borderTopRightRadius="8px"
+      >
+        <C.Center>
+          <Logo width="96px" />
+        </C.Center>
+        <Buttons.CTA w="100%" mt="8px" onClick={next}>
           게임 시작 하기
         </Buttons.CTA>
-        <C.Text
-          color="white"
-          fontWeight={700}
-          mt="32px"
-          bg="rgba(40, 40, 40, 0.5)"
-          w="400px"
-          textAlign="center"
+        <C.Button
+          colorScheme="gray"
+          borderColor="rgba(0,0,0, 0.3)"
+          w="100%"
+          mt="8px"
+          variant="outline"
+          h="48px"
+          borderRadius="12px"
         >
-          우영우 게임은 상업성이 없는 팬 게임 입니다.
-        </C.Text>
+          친구에게 공유하기
+        </C.Button>
       </C.Box>
     </C.Flex>
   );

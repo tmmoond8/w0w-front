@@ -6,4 +6,5 @@ export { default as Meta } from './Meta';
 export { default as ExternalLink } from './ExternalLink';
 export { default as ShareButton } from './ShareButton';
 export { default as FeedbackMessage } from './FeedbackMessage';
+export { default as Logo } from './Logo';
 export * from './quiz';

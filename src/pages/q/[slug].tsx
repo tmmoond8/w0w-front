@@ -32,7 +32,7 @@ export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
         description={quizSet.attributes.ogDescription}
         url={`${ENVS.NEXT_PUBLIC_URL}/q/${slug}`}
       />
-      {step == 0 && <Footer />}
+      <Footer />
     </>
   );
 }
