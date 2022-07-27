@@ -11,10 +11,12 @@ export default class MyDocument extends Document {
             rel="stylesheet"
           />
           <Script
+            id="ga-tag"
             async
             src="https://www.googletagmanager.com/gtag/js?id=G-2V7C7VZQ6C"
           ></Script>
           <Script
+            id="G-2V7C7VZQ6C"
             strategy="afterInteractive"
             dangerouslySetInnerHTML={{
               __html: `
