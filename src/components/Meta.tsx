@@ -12,10 +12,10 @@ interface Props {
 export default function Meta({
   title = '우영우 게임',
   description = '똑바로 읽어도 거꾸로 읽어도 우영우 게임',
-  image = '/og-image.png',
+  image = `${ENVS.NEXT_PUBLIC_URL}/og-image.png`,
   url = ENVS.NEXT_PUBLIC_URL,
 }: Props) {
-  const favicon = '/favicon.ico';
+  const favicon = `${ENVS.NEXT_PUBLIC_URL}/apple-touch-icon.png`;
 
   return (
     <Head>
