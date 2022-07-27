@@ -2,8 +2,7 @@ import React from 'react';
 import * as C from '@chakra-ui/react';
 import copy from 'copy-to-clipboard';
 
-interface Props {
-  children: React.ReactNode;
+interface Props extends C.ButtonProps {
   text: string;
   url: string;
 }
@@ -30,17 +29,17 @@ export default function ShareButton({ text, url, children }: Props) {
   };
   return (
     <C.Button
+      w="100%"
+      h="48px"
+      borderRadius="12px"
+      colorScheme="gray"
+      variant="outline"
+      color="#00000075"
+      borderColor="#00000050"
+      fontFamily="'Gamja Flower'"
       onClick={handleClick}
-      bgColor="#f79aba"
-      _hover={{
-        filter: 'brightness(1.1)',
-      }}
-      _active={{
-        filter: 'brightness(0.9)',
-      }}
-      color="white"
       flex="1"
-      fontSize="14px"
+      fontSize="18px"
     >
       {children}
     </C.Button>

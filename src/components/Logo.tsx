@@ -1,13 +1,16 @@
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 
 interface Props {
   width: string;
+  mt?: string;
 }
 
-export default function Logo({ width }: Props) {
+export default function Logo({ width, mt }: Props) {
   return (
     <SVG
       width={width}
+      mt={mt}
       viewBox="0 0 96 80"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +87,12 @@ export default function Logo({ width }: Props) {
   );
 }
 
-const SVG = styled.svg<{ width: string }>`
+const SVG = styled.svg<{ width: string; mt?: string }>`
   width: ${(p) => p.width};
+  ${(p) =>
+    p.mt &&
+    css`
+      margin-top: ${p.mt};
+    `}
   height: auto;
 `;

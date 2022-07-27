@@ -4,7 +4,7 @@ import { ExternalLink } from 'src/components';
 export default function Footer() {
   return (
     <C.Box p="16px 20px 0 20px" minH="116px">
-      <C.Text as="p" fontSize="12px" color="#d1c6c2" textAlign="center">
+      <C.Text as="p" fontSize="12px" color="#00000040" textAlign="center">
         이 게임은 우영우를 응원하는 팬심으로 만든 비상업용 게임입니다
       </C.Text>
       <C.HStack w="auto" m="6px auto" alignItems="center" gap="0 16px">
@@ -13,7 +13,7 @@ export default function Footer() {
           flex="1"
         >
           <C.Text fontSize="12px" color="rgba(0,0,0, 0.5)" textAlign="right">
-            공식 홈페이지
+            우영우 ENA 공식 홈페이지
           </C.Text>
         </ExternalLink>
         <C.Text
@@ -25,11 +25,11 @@ export default function Footer() {
         </C.Text>
         <ExternalLink url="https://wooyoungwoo.tv/" flex="1">
           <C.Text fontSize="12px" color="rgba(0,0,0, 0.5)">
-            팬 커뮤니티
+            우영우 대표 팬 커뮤니티
           </C.Text>
         </ExternalLink>
       </C.HStack>
-      <C.Text as="p" fontSize="12px" color="#d1c6c2" textAlign="center">
+      <C.Text as="p" fontSize="12px" color="#00000040" textAlign="center">
         Develop by Tamm / Design by Kibok
       </C.Text>
       <C.Box h="32px" />

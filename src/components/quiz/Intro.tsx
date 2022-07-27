@@ -1,12 +1,35 @@
 import React from 'react';
 import NextImage from 'next/image';
-import { Buttons, Logo } from 'src/components';
+import { Buttons, Logo, ExternalLink, ShareButton } from 'src/components';
 import mainImage from 'src/assets/main.png';
 import * as C from '@chakra-ui/react';
 
-export default function Intro({ next }: { next: () => void }) {
+export default function Intro({
+  next,
+  url,
+}: {
+  url: string;
+  next: () => void;
+}) {
   return (
-    <C.Flex as="div" flexDirection="column" position="relative">
+    <C.Flex
+      as="div"
+      h="100%"
+      flexDirection="column"
+      position="relative"
+      flex="1"
+    >
+      <C.Text
+        position="absolute"
+        top="33px"
+        w="100%"
+        textAlign="center"
+        color="white"
+        fontFamily="'Gamja Flower'"
+        zIndex={50}
+      >
+        똑바로해도, 거꾸로해도
+      </C.Text>
       <C.Box
         maxW="500px"
         height="auto"
@@ -33,20 +56,23 @@ export default function Intro({ next }: { next: () => void }) {
         <C.Center>
           <Logo width="96px" />
         </C.Center>
-        <Buttons.CTA w="100%" mt="8px" onClick={next}>
-          게임 시작 하기
+        <Buttons.CTA
+          w="100%"
+          mt="24px"
+          onClick={next}
+          fontFamily="'Gamja Flower'"
+        >
+          게임 시작
         </Buttons.CTA>
-        <C.Button
+        <C.Box h="8px " />
+        <ShareButton
           colorScheme="gray"
           borderColor="rgba(0,0,0, 0.3)"
-          w="100%"
-          mt="8px"
-          variant="outline"
-          h="48px"
-          borderRadius="12px"
+          text="똑바로 읽어도 거꾸로 읽어도 우영우 게임"
+          url={globalThis.location?.href}
         >
-          친구에게 공유하기
-        </C.Button>
+          친구에게 공유
+        </ShareButton>
       </C.Box>
     </C.Flex>
   );

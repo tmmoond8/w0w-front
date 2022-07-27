@@ -2,6 +2,7 @@ import React from 'react';
 import * as C from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { QuizSet, StrpItem } from 'src/types';
+import { Header } from 'src/components';
 import APIS from 'src/apis';
 import storage from 'src/libs/storage';
 
@@ -18,7 +19,7 @@ export default function Quiz({ quizSet }: Props) {
 
   const [input, setInput] = React.useState('');
   const [status, setStatus] = React.useState<null | 'OK' | 'NO'>(null);
-  const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 13);
+  const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 0);
   const [progress, setProgress] = React.useState(100);
   const [timeOver, setTimeOver] = React.useState(false);
   const timerRefs = React.useRef<{
@@ -29,6 +30,10 @@ export default function Quiz({ quizSet }: Props) {
   const fadeIn = C.keyframes`
     from { opacity: 0 };
     to { opacity: 1};
+  `;
+  const vibration = C.keyframes`
+    from { transform: rotate(4deg) };
+    to { transform: rotate(-4deg) };
   `;
 
   const currentQuiz = React.useMemo(() => {
@@ -117,21 +122,34 @@ export default function Quiz({ quizSet }: Props) {
   }, [timeOver]);
 
   return (
-    <C.Box flex="1" p="0 16px" h="100%">
-      <C.Progress
-        size="sm"
-        __css={{
-          bgColor: '#eee',
-          margin: '0 -16px',
-          height: '4px',
-          width: 'calc(100% + 32px)',
-          '& > div': {
-            transition: 'width 60s linear',
-            backgroundColor: '#f79aba',
-          },
-        }}
-        value={progress}
-      />
+    <C.Flex display="flex" flexDirection="column" flex="1" h="100%">
+      <Header />
+      <C.Box position="relative" p="0 20px">
+        <C.Text
+          position="absolute"
+          right="20px"
+          top="-30px"
+          color="#00000080"
+          fontFamily="'Gamja Flower'"
+        >
+          남은시간
+        </C.Text>
+        <C.Progress
+          w="100%"
+          h="4px"
+          borderRadius="2px"
+          __css={{
+            bgColor: '#eee',
+            height: '4px',
+            '& > div': {
+              transition: 'width 60s linear',
+              backgroundColor: '#E52E6B',
+            },
+          }}
+          value={progress}
+        />
+      </C.Box>
+
       {quizIndex >= quizzes.length && (
         <C.Flex
           position="absolute"
@@ -144,34 +162,45 @@ export default function Quiz({ quizSet }: Props) {
           transition="opacity 0.3s ease-out"
           animation={`${fadeIn} 0.3s ease-out`}
         >
-          <C.Text fontSize="20px" w="100%" textAlign="center">
-            👏모든 문제를 풀었어요!~ 👏
+          <C.Text
+            fontSize="24px"
+            w="100%"
+            textAlign="center"
+            fontFamily="'Gamja Flower'"
+          >
+            모든 문제를 풀었어요!~ 👏
           </C.Text>
         </C.Flex>
       )}
       <C.Center flexDirection="column" h="100%">
-        <C.Flex justifyContent="center" gap="0 8px">
+        <C.Flex justifyContent="center" gap="0 16px">
           {Array.from({ length: 3 }).map((_, index) => (
             <C.Text
-              w="40px"
+              w="60px"
               key={index}
-              h="40px"
-              borderBottom="2px solid #f79aba"
-              fontSize="20px"
+              h="60px"
+              borderBottom={`3px solid ${
+                index % 2 === 0 ? '#E52E6B' : 'rgba(0,0,0, 0.25)'
+              }`}
+              fontSize="48px"
               textAlign="center"
               lineHeight="42px"
-              color={status === 'OK' || status === 'NO' ? '#f79aba' : '#222'}
+              fontFamily="'Gamja Flower'"
+              color={`${index % 2 === 0 ? '#E52E6B' : 'rgba(0,0,0, 0.75)'}`}
+              animation={
+                status === 'NO' ? `${vibration} .11s infinite` : 'none'
+              }
             >
               {input[index]}
             </C.Text>
           ))}
         </C.Flex>
-        <C.Box h="80px" />
+        <C.Box h="48px" />
         <C.Grid
           templateColumns={`repeat(${currentQuiz.syllables.length / 2}, 60px)`}
           justifyContent="center"
           m="0 auto"
-          p="0 24px"
+          p="0 12px"
           gap="10px"
         >
           {currentQuiz.syllables.map((syllable) => (
@@ -179,6 +208,15 @@ export default function Quiz({ quizSet }: Props) {
               <C.Button
                 w="100%"
                 h="100%"
+                colorScheme="gray"
+                bgColor="#9D949126"
+                fontFamily="'Gamja Flower'"
+                borderRadius="12px"
+                fontSize="28px"
+                color="#00000080"
+                _active={{
+                  bgColor: '#D1C6C2',
+                }}
                 onClick={() => handleClickSyllable(syllable)}
               >
                 {syllable}
@@ -187,6 +225,6 @@ export default function Quiz({ quizSet }: Props) {
           ))}
         </C.Grid>
       </C.Center>
-    </C.Box>
+    </C.Flex>
   );
 }

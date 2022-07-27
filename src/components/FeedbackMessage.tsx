@@ -1,14 +1,14 @@
 import * as C from '@chakra-ui/react';
 
-interface Props {
+interface Props extends C.TextProps {
   score: number;
 }
 
-export default function FeedbackMessage({ score }: Props) {
+export default function FeedbackMessage({ score, ...props }: Props) {
   const message = useFeedbackMessage(score);
   return (
-    <C.Text px="16px" textAlign="center">
-      {message}
+    <C.Text px="16px" textAlign="center" {...props}>
+      "{message}"
     </C.Text>
   );
 }

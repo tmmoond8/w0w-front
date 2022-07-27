@@ -22,16 +22,18 @@ export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
 
   return (
     <>
-      <C.Box flex="1" overflow="hidden">
-        {step == 0 && <Intro next={next} />}
-        {step == 1 && <NicknameInput next={next} />}
-        {step == 2 && quizSet && <Quiz quizSet={quizSet} />}
-      </C.Box>
       <Meta
         title={quizSet.attributes.ogTitle}
         description={quizSet.attributes.ogDescription}
         url={`${ENVS.NEXT_PUBLIC_URL}/q/${slug}`}
       />
+      <C.Box flex="1" overflow="hidden">
+        {step == 0 && (
+          <Intro next={next} url={`${ENVS.NEXT_PUBLIC_URL}/q/${slug}`} />
+        )}
+        {step == 1 && <NicknameInput next={next} />}
+        {step == 2 && quizSet && <Quiz quizSet={quizSet} />}
+      </C.Box>
       <Footer />
     </>
   );

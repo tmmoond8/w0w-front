@@ -1,6 +1,6 @@
 import React from 'react';
 import * as C from '@chakra-ui/react';
-import { Buttons } from 'src/components';
+import { Buttons, Header } from 'src/components';
 import storage from 'src/libs/storage';
 
 export default function NicknameInput({ next }: { next: () => void }) {
@@ -9,14 +9,18 @@ export default function NicknameInput({ next }: { next: () => void }) {
 
   return (
     <C.Flex as="div" flexDirection="column" position="relative" flex="1">
-      <C.Box p="32px 16px 0 16px">
-        <C.Text>닉네임을 알려주세요 🐳</C.Text>
+      <Header />
+      <C.Box p="16px 16px 0 16px">
+        <C.Text fontFamily="'Gamja Flower'">닉네임을 알려주세요 🐳</C.Text>
         <C.InputGroup>
           <C.Input
             type="text"
             placeholder="닉네임은 2글자 이상으로 입력해주세요"
             mt="12px"
+            h="48px"
             value={nickname}
+            fontFamily="'Gamja Flower'"
+            borderRadius="12px"
             onChange={(e) => {
               if (e.target.value.trim().length >= 2) {
                 setError(false);
@@ -27,9 +31,9 @@ export default function NicknameInput({ next }: { next: () => void }) {
           />
         </C.InputGroup>
         <Buttons.CTA
-          mt="32px"
-          colorScheme="pink"
+          mt="10px"
           w="100%"
+          fontFamily="'Gamja Flower'"
           onClick={() => {
             if (nickname.trim().length < 2) {
               setError(true);
@@ -39,7 +43,7 @@ export default function NicknameInput({ next }: { next: () => void }) {
             next();
           }}
         >
-          우영우 게임 시작!
+          입력완료
         </Buttons.CTA>
       </C.Box>
     </C.Flex>
