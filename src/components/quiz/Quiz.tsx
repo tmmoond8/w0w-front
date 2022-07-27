@@ -139,7 +139,7 @@ export default function Quiz({ quizSet }: Props) {
           h="4px"
           borderRadius="2px"
           __css={{
-            bgColor: '#eee',
+            bgColor: '#9D94914D',
             height: '4px',
             '& > div': {
               transition: 'width 60s linear',

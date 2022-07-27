@@ -3,7 +3,7 @@ import { ExternalLink } from 'src/components';
 
 export default function Footer() {
   return (
-    <C.Box p="16px 20px 0 20px" minH="116px">
+    <C.Box p="16px 20px 0 20px" minH="116px" bgColor="#F0EBE1">
       <C.Text as="p" fontSize="12px" color="#00000040" textAlign="center">
         이 게임은 우영우를 응원하는 팬심으로 만든 비상업용 게임입니다
       </C.Text>
@@ -41,7 +41,7 @@ export default function Footer() {
           fontSize="10px"
           lineHeight="28px"
           textAlign="center"
-          bgColor="#F0EBE1"
+          bgColor="#9D949126"
         >
           왓챠벨을 참고하여 만들었습니다.
         </C.Text>

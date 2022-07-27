@@ -12,7 +12,7 @@ function CTA(props: ButtonProps) {
       colorScheme="pink"
       bgColor="#E52E6B"
       borderRadius="12px"
-      color="white"
+      color="#F0EBE1"
       {...props}
     >
       {props.children}

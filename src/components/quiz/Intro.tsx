@@ -49,7 +49,7 @@ export default function Intro({
         p="20px 24px 0"
         w="100%"
         bottom="0"
-        bgColor="white"
+        bgColor="#F0EBE1"
         borderTopLeftRadius="8px"
         borderTopRightRadius="8px"
       >

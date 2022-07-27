@@ -21,6 +21,7 @@ export default function NicknameInput({ next }: { next: () => void }) {
             value={nickname}
             fontFamily="'Gamja Flower'"
             borderRadius="12px"
+            borderColor="#00000025"
             onChange={(e) => {
               if (e.target.value.trim().length >= 2) {
                 setError(false);

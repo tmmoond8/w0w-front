@@ -21,6 +21,7 @@ export default function Layout({ children }: Props) {
       minH="600px"
       maxW="460px"
       maxH="896px"
+      bgColor="#F0EBE1"
     >
       {children}
     </Box>
