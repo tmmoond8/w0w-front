@@ -131,6 +131,11 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
           <C.HStack gap="0 8px" mt="8px">
             <C.Box flex="1">
               <ShareButton
+                bgColor="#F0EBE1 !important"
+                _hover={{
+                  filter: 'brightness(95%)',
+                  bgColor: '#F0EBE1 !important',
+                }}
                 text={`${quizResult.nickname} 님의 우영우 게임 점수는 ${quizResult.score}개`}
                 url={globalThis.location?.href}
               >

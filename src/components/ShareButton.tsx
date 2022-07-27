@@ -7,7 +7,7 @@ interface Props extends C.ButtonProps {
   url: string;
 }
 
-export default function ShareButton({ text, url, children }: Props) {
+export default function ShareButton({ text, url, children, ...props }: Props) {
   const toast = C.useToast();
   const handleClick = () => {
     if (globalThis.navigator?.share) {
@@ -40,6 +40,7 @@ export default function ShareButton({ text, url, children }: Props) {
       onClick={handleClick}
       flex="1"
       fontSize="18px"
+      {...props}
     >
       {children}
     </C.Button>

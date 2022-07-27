@@ -19,7 +19,7 @@ export default function Quiz({ quizSet }: Props) {
 
   const [input, setInput] = React.useState('');
   const [status, setStatus] = React.useState<null | 'OK' | 'NO'>(null);
-  const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 12);
+  const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 0);
   const [progress, setProgress] = React.useState(100);
   const [timeOver, setTimeOver] = React.useState(false);
   const timerRefs = React.useRef<{
@@ -222,6 +222,9 @@ export default function Quiz({ quizSet }: Props) {
                 fontSize="28px"
                 color="#00000080"
                 _active={{
+                  bgColor: '#D1C6C2',
+                }}
+                _hover={{
                   bgColor: '#D1C6C2',
                 }}
                 onClick={() => handleClickSyllable(value)}

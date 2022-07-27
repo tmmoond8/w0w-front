@@ -66,7 +66,11 @@ export default function Intro({
         </Buttons.CTA>
         <C.Box h="8px " />
         <ShareButton
-          colorScheme="gray"
+          bgColor="#F0EBE1 !important"
+          _hover={{
+            filter: 'brightness(95%)',
+            bgColor: '#F0EBE1 !important',
+          }}
           borderColor="rgba(0,0,0, 0.3)"
           text="똑바로 읽어도 거꾸로 읽어도 우영우 게임"
           url={url}
