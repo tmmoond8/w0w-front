@@ -10,27 +10,37 @@ interface Props {
 }
 
 export default function Quiz({ quizSet }: Props) {
-  const [input, setInput] = React.useState('');
-  const [status, setStatus] = React.useState<null | 'OK' | 'NO'>(null);
-  const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 0);
-  const [progress, setProgress] = React.useState(100);
-  const [timeOver, setTimeOver] = React.useState(false);
-  const router = useRouter();
-
   const quizzes = React.useMemo(() => {
     const _quizzes = [...quizSet.attributes.quizzes.data];
     _quizzes.sort((a, b) => a.attributes.weight - b.attributes.weight);
     return _quizzes;
   }, [quizSet]);
 
+  const [input, setInput] = React.useState('');
+  const [status, setStatus] = React.useState<null | 'OK' | 'NO'>(null);
+  const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 13);
+  const [progress, setProgress] = React.useState(100);
+  const [timeOver, setTimeOver] = React.useState(false);
+  const timerRefs = React.useRef<{
+    timeOver: ReturnType<typeof setTimeout>;
+    isClear: ReturnType<typeof setTimeout>;
+  }>({} as any);
+  const router = useRouter();
+  const fadeIn = C.keyframes`
+    from { opacity: 0 };
+    to { opacity: 1};
+  `;
+
   const currentQuiz = React.useMemo(() => {
-    const syllables = quizzes[quizIndex].attributes.syllables.split(',');
-    if (quizIndex > 5) {
+    const index = Math.min(quizIndex, quizzes.length - 1);
+    const syllables = quizzes[index].attributes.syllables.split(',');
+    if (index > 5) {
       syllables.sort(() => (Math.random() > 0.5 ? 1 : -1));
     }
+
     return {
-      ...quizzes[quizIndex].attributes,
-      id: quizzes[quizIndex].id,
+      ...quizzes[index].attributes,
+      id: quizzes[index].id,
       syllables,
     };
   }, [quizIndex, quizzes]);
@@ -66,13 +76,31 @@ export default function Quiz({ quizSet }: Props) {
 
   React.useEffect(() => {
     setProgress(0);
-    const timer = setTimeout(() => {
-      setTimeOver(true);
-    }, 60 * 1000);
+    if (timerRefs.current) {
+      timerRefs.current.timeOver = setTimeout(() => {
+        setTimeOver(true);
+      }, 60 * 1000);
+    }
+
     return () => {
-      clearTimeout(timer);
+      if (timerRefs.current) {
+        clearTimeout(timerRefs.current.timeOver);
+      }
     };
-  }, []);
+  }, [timerRefs.current]);
+
+  React.useEffect(() => {
+    if (quizIndex >= quizzes.length) {
+      timerRefs.current.isClear = setTimeout(() => {
+        setTimeOver(true);
+      }, 1000);
+    }
+    return () => {
+      if (timerRefs.current) {
+        clearTimeout(timerRefs.current.isClear);
+      }
+    };
+  }, [quizIndex]);
 
   React.useEffect(() => {
     if (timeOver) {
@@ -104,6 +132,23 @@ export default function Quiz({ quizSet }: Props) {
         }}
         value={progress}
       />
+      {quizIndex >= quizzes.length && (
+        <C.Flex
+          position="absolute"
+          top="25vh"
+          left="0"
+          w="100%"
+          h="100%"
+          zIndex="100"
+          backdropFilter="blur(2px)"
+          transition="opacity 0.3s ease-out"
+          animation={`${fadeIn} 0.3s ease-out`}
+        >
+          <C.Text fontSize="20px" w="100%" textAlign="center">
+            👏모든 문제를 풀었어요!~ 👏
+          </C.Text>
+        </C.Flex>
+      )}
       <C.Center flexDirection="column" h="100%">
         <C.Flex justifyContent="center" gap="0 8px">
           {Array.from({ length: 3 }).map((_, index) => (
