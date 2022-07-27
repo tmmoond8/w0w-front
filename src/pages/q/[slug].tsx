@@ -1,18 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import * as C from '@chakra-ui/react';
-import {
-  Header,
-  Footer,
-  NicknameInput,
-  Quiz,
-  Meta,
-  Intro,
-} from 'src/components';
+import { Footer, NicknameInput, Quiz, Meta, Intro } from 'src/components';
 import APIS from 'src/apis';
 import { QuizSet, StrpItem } from 'src/types';
 import ENVS from 'src/libs/envs';
-import storage from 'src/libs/storage';
 
 export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
   const [step, setStep] = React.useState(0);
@@ -23,14 +15,13 @@ export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
   const { slug } = router.query;
 
   React.useEffect(() => {
-    if (storage.getNickname()) {
-      setStep(1);
+    if (router.query.step) {
+      setStep(parseInt(router.query.step as string));
     }
-  }, []);
+  }, [router.query]);
 
   return (
     <>
-      <Header />
       <C.Box flex="1" overflow="hidden">
         {step == 0 && <Intro next={next} />}
         {step == 1 && <NicknameInput next={next} />}

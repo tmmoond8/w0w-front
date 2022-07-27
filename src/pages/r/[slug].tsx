@@ -114,7 +114,11 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
           w="100%"
           maxW="300px"
           mt="12px"
-          onClick={() => router.replace(`/q/${quizResult.quizId}`)}
+          onClick={() =>
+            router.replace(
+              `/q/${quizResult.quizId}${nickname ? '?step=1' : ''}`
+            )
+          }
         >
           {nickname ? '다시하기' : ' 나도 해보기'}
         </C.Button>
