@@ -1,20 +1,4 @@
-import result_og_00 from './00.jpeg';
-import result_og_01 from './01.jpeg';
-import result_og_02 from './02.webp';
-import result_og_03 from './03.png';
-import result_og_04 from './04.jpeg';
-import result_og_05 from './05.jpeg';
-import result_og_06 from './06.jpeg';
-import result_og_07 from './07.jpeg';
-import result_og_08 from './08.jpeg';
-import result_og_09 from './09.jpeg';
-import result_og_10 from './10.jpeg';
-import result_og_11 from './11.webp';
-import result_og_12 from './12.webp';
-import result_og_13 from './13.jpg';
-import result_og_14 from './14.jpeg';
-import result_og_15 from './15.webp';
-
+import ENVS from 'src/libs/envs';
 import result_s_00 from './00_s.jpeg';
 import result_s_01 from './01_s.jpeg';
 import result_s_02 from './02_s.webp';
@@ -31,6 +15,23 @@ import result_s_12 from './12_s.webp';
 import result_s_13 from './13_s.jpeg';
 import result_s_14 from './14_s.jpeg';
 import result_s_15 from './15_s.webp';
+
+const result_og_00 = `${ENVS.NEXT_PUBLIC_URL}/results/00.jpeg`;
+const result_og_01 = `${ENVS.NEXT_PUBLIC_URL}/results/01.jpeg`;
+const result_og_02 = `${ENVS.NEXT_PUBLIC_URL}/results/02.webp`;
+const result_og_03 = `${ENVS.NEXT_PUBLIC_URL}/results/03.png`;
+const result_og_04 = `${ENVS.NEXT_PUBLIC_URL}/results/04.jpeg`;
+const result_og_05 = `${ENVS.NEXT_PUBLIC_URL}/results/05.jpeg`;
+const result_og_06 = `${ENVS.NEXT_PUBLIC_URL}/results/06.jpeg`;
+const result_og_07 = `${ENVS.NEXT_PUBLIC_URL}/results/07.jpeg`;
+const result_og_08 = `${ENVS.NEXT_PUBLIC_URL}/results/08.jpeg`;
+const result_og_09 = `${ENVS.NEXT_PUBLIC_URL}/results/09.jpeg`;
+const result_og_10 = `${ENVS.NEXT_PUBLIC_URL}/results/10.jpeg`;
+const result_og_11 = `${ENVS.NEXT_PUBLIC_URL}/results/11.webp`;
+const result_og_12 = `${ENVS.NEXT_PUBLIC_URL}/results/12.webp`;
+const result_og_13 = `${ENVS.NEXT_PUBLIC_URL}/results/13.jpg`;
+const result_og_14 = `${ENVS.NEXT_PUBLIC_URL}/results/14.jpeg`;
+const result_og_15 = `${ENVS.NEXT_PUBLIC_URL}/results/15.webp`;
 
 export const resultOgs = [
   result_og_00,

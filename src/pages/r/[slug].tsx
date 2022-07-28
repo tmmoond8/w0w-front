@@ -16,9 +16,10 @@ import { resultOgs, resultSquares } from 'src/assets/result';
 import { useRouter } from 'next/router';
 import storage from 'src/libs/storage';
 import ga from 'src/libs/ga';
+import ENVS from 'src/libs/envs';
 
 interface Props {
-  quizResult: QuizResult;
+  quizResult: QuizResult & { id: number };
   quizSet: QuizSet;
 }
 
@@ -44,8 +45,9 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
       <Header />
       <Meta
         title={`${quizResult.nickname} 님의 우영우 게임 결과는 ${quizResult.score}개`}
-        description={`${quizResult.nickname} 님보다 더 많이 맞힐 수 있다면 도전!!!`}
-        image={resultOgs[quizResult.score].src}
+        description={`${quizResult.nickname} 님보다 더 많이 맞힐 수 있다면 도전!!! #우영우게임 #우영우`}
+        url={`${ENVS.NEXT_PUBLIC_URL}/r/${quizResult.id}`}
+        image={resultOgs[quizResult.score]}
       />
       <C.Center flexDirection="column" p="16px" flex="1">
         <C.Flex
@@ -178,14 +180,17 @@ export async function getServerSideProps({
     };
   }
   const {
-    data: { attributes: quizResult },
+    data: { attributes: quizResult, id },
   } = await APIS.result.get(parseInt(params.slug));
   const {
     data: { attributes: quizSet },
   } = await APIS.quizSet.get(quizResult.quizId);
   return {
     props: {
-      quizResult,
+      quizResult: {
+        ...quizResult,
+        id,
+      },
       quizSet,
     },
   };
