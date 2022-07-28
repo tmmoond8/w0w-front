@@ -4,17 +4,16 @@ import { Buttons, Logo, ShareButton } from 'src/components';
 import mainImage from 'src/assets/main.png';
 import * as C from '@chakra-ui/react';
 import ga from 'src/libs/ga';
-import storage from 'src/libs/storage';
 
 export default function Intro({
-  next,
+  quizId,
   url,
+  next,
 }: {
+  quizId: number;
   url: string;
   next: () => void;
 }) {
-  const nickname = storage.getNickname();
-
   return (
     <C.Flex
       as="div"
@@ -66,7 +65,7 @@ export default function Intro({
           onClick={() => {
             next();
             ga.sendEvent('start game', {
-              nickname,
+              quizId,
             });
           }}
           fontFamily="'Gamja Flower'"

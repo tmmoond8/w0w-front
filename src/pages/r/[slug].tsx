@@ -15,6 +15,7 @@ import {
 import { resultOgs, resultSquares } from 'src/assets/result';
 import { useRouter } from 'next/router';
 import storage from 'src/libs/storage';
+import ga from 'src/libs/ga';
 
 interface Props {
   quizResult: QuizResult;
@@ -59,7 +60,6 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
             position="relative"
             flexDirection="column"
             justifyContent="space-between"
-            // border="2px white solid"
             borderRadius="22px"
             w="100%"
             maxW="600px"
@@ -146,11 +146,14 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
               <Buttons.CTA
                 w="100%"
                 fontFamily="'Gamja Flower'"
-                onClick={() =>
+                onClick={() => {
+                  ga.sendEvent(nickname ? 'replay' : 'do it too', {
+                    quizId: quizResult.quizId,
+                  });
                   router.replace(
                     `/q/${quizResult.quizId}${nickname ? '?step=1' : ''}`
-                  )
-                }
+                  );
+                }}
               >
                 {nickname ? '다시하기' : ' 나도 해보기'}
               </Buttons.CTA>

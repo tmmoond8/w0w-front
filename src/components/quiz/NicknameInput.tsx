@@ -4,7 +4,13 @@ import { Buttons, Header } from 'src/components';
 import storage from 'src/libs/storage';
 import ga from 'src/libs/ga';
 
-export default function NicknameInput({ next }: { next: () => void }) {
+export default function NicknameInput({
+  quizId,
+  next,
+}: {
+  quizId: number;
+  next: () => void;
+}) {
   const [nickname, setNickname] = React.useState(storage.getNickname() ?? '');
   const [error, setError] = React.useState(false);
 
@@ -44,7 +50,7 @@ export default function NicknameInput({ next }: { next: () => void }) {
             storage.setNickname(nickname);
             next();
             ga.sendEvent('complete nickname', {
-              nickname,
+              quizId,
             });
           }}
         >

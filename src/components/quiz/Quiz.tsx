@@ -5,6 +5,7 @@ import { QuizSet, StrpItem } from 'src/types';
 import { Header } from 'src/components';
 import APIS from 'src/apis';
 import storage from 'src/libs/storage';
+import ga from 'src/libs/ga';
 
 interface Props {
   quizSet: StrpItem<QuizSet>;
@@ -35,6 +36,16 @@ export default function Quiz({ quizSet }: Props) {
     from { transform: rotate(4deg) };
     to { transform: rotate(-4deg) };
   `;
+
+  const handleNextQuiz = () => {
+    nextQuiz();
+    if (quizIndex < quizzes.length) {
+      ga.sendEvent('quiz', {
+        quizId: quizSet.id,
+        quizNumber: quizIndex + 1,
+      });
+    }
+  };
 
   const currentQuiz = React.useMemo(() => {
     const index = Math.min(quizIndex, quizzes.length - 1);
@@ -72,7 +83,7 @@ export default function Quiz({ quizSet }: Props) {
     if (status) {
       timer = setTimeout(() => {
         if (status === 'OK') {
-          nextQuiz();
+          handleNextQuiz();
         }
         setStatus(null);
         setInput('');

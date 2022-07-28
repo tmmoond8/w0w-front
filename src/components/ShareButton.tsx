@@ -1,6 +1,8 @@
 import React from 'react';
 import * as C from '@chakra-ui/react';
 import copy from 'copy-to-clipboard';
+import ga from 'src/libs/ga';
+import { useRouter } from 'next/router';
 
 interface Props extends C.ButtonProps {
   text: string;
@@ -8,8 +10,14 @@ interface Props extends C.ButtonProps {
 }
 
 export default function ShareButton({ text, url, children, ...props }: Props) {
+  const router = useRouter();
   const toast = C.useToast();
   const handleClick = () => {
+    console.log('router', router);
+    ga.sendEvent('share', {
+      url,
+      path: router.asPath,
+    });
     if (globalThis.navigator?.share) {
       globalThis.navigator.share({
         url,
