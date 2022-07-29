@@ -52,11 +52,12 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
       <C.Center flexDirection="column" p="16px" flex="1">
         <C.Flex
           as="section"
+          w="100%"
           h="100%"
-          maxH="460px"
+          maxH="500px"
           display="flex"
           flexDirection="column"
-          justifyContent="space-between"
+          justifyContent="center"
         >
           <C.Flex
             position="relative"
@@ -75,6 +76,7 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
               h="100%"
               __css={{
                 '& > span': {
+                  width: '100% !important',
                   height: '100% !important',
                 },
               }}
@@ -130,7 +132,7 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
               </C.Text>
             </C.Box>
           </C.Flex>
-          <C.HStack gap="0 8px" mt="8px">
+          <C.HStack gap="0 8px" mt="16px">
             <C.Box flex="1">
               <ShareButton
                 bgColor="#F0EBE1 !important"
