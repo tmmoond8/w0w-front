@@ -28,14 +28,30 @@ export default function Quiz({ quizSet }: Props) {
     isClear: ReturnType<typeof setTimeout>;
   }>({} as any);
   const router = useRouter();
+
   const fadeIn = C.keyframes`
     from { opacity: 0 };
     to { opacity: 1};
   `;
-  const vibration = C.keyframes`
-    from { transform: rotate(4deg) };
-    to { transform: rotate(-4deg) };
-  `;
+  const AnswerAnimation = React.useMemo(() => {
+    if (status === 'NO') {
+      const vibration = C.keyframes`
+        from { transform: rotate(4deg) };
+        to { transform: rotate(-4deg) };
+     `;
+      return `${vibration} 0.11s infinite`;
+    }
+    if (status === 'OK') {
+      const scale = C.keyframes`
+        0% { transform: scale3d(1,1,1) };
+        50% { transform: scale3d(1.3, 1.3, 1) };
+        100% { transform: scale3d(1,1,1) };
+      `;
+      return `${scale} .6s infinite`;
+    }
+
+    return `none`;
+  }, [status]);
 
   const handleNextQuiz = () => {
     nextQuiz();
@@ -137,8 +153,6 @@ export default function Quiz({ quizSet }: Props) {
     }
   }, [timeOver]);
 
-  console.log('currentQuiz', currentQuiz.syllables);
-
   return (
     <C.Flex display="flex" flexDirection="column" flex="1" h="100%">
       <Header />
@@ -205,9 +219,7 @@ export default function Quiz({ quizSet }: Props) {
               lineHeight="42px"
               fontFamily="'Gamja Flower'"
               color={`${index % 2 === 0 ? '#E52E6B' : 'rgba(0,0,0, 0.75)'}`}
-              animation={
-                status === 'NO' ? `${vibration} .11s infinite` : 'none'
-              }
+              animation={AnswerAnimation}
             >
               {input[index]}
             </C.Text>
