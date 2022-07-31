@@ -9,7 +9,7 @@ export default function Footer() {
       </C.Text>
       <C.HStack w="auto" m="6px auto" alignItems="center" gap="0 16px">
         <ExternalLink
-          url="http://ena.skylifetv.co.kr/bbs/board.php?bo_table=skydrama&wr_id=113&sca=%EC%B5%9C%EC%8B%A0"
+          url="https://ena.skylifetv.co.kr/bbs/board.php?bo_table=skydrama&wr_id=113&sca=%EC%B5%9C%EC%8B%A0"
           flex="1"
         >
           <C.Text fontSize="12px" color="rgba(0,0,0, 0.5)" textAlign="right">
