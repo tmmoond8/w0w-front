@@ -30,7 +30,7 @@ export async function getServerSideProps() {
   const { data } = await APIS.quizSet.all();
   return {
     props: {
-      quizId: data[0].id,
+      quizId: data[1].id,
     },
   };
 }

@@ -29,10 +29,10 @@ export default function GamePlay({ input, status }: Props) {
 
   return (
     <C.Flex justifyContent="center" gap="0 16px">
-      {Array.from({ length: 3 }).map((_, index) => (
+      {Array.from({ length: 3 }).map((v, index) => (
         <C.Text
           w="60px"
-          key={index}
+          key={`${v}${index}`}
           h="60px"
           borderBottom={`3px solid ${
             index % 2 === 0 ? '#E52E6B' : 'rgba(0,0,0, 0.25)'

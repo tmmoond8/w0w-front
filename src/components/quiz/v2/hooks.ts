@@ -149,7 +149,7 @@ function useQuizData({
         value,
         flip: true,
       }));
-    Array.from({ length: 10 }).forEach((_) => {
+    Array.from({ length: 10 }).forEach(() => {
       syllables.sort(() => (Math.random() > 0.5 ? 1 : -1));
     });
 
