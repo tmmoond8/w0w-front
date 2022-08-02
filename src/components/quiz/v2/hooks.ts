@@ -4,13 +4,14 @@ import { StrpItem, QuizSet, Quiz } from 'src/types';
 import ga from 'src/libs/ga';
 import APIS from 'src/apis';
 import storage from 'src/libs/storage';
+import session from 'src/libs/session';
 
 export const useGame = ({ quizSet }: { quizSet: StrpItem<QuizSet> }) => {
   const [status, setStatus] = React.useState<null | 'OK' | 'NO'>(null);
   const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 0);
   const [input, setInput] = React.useState('');
   const { quizzes, currentQuiz } = useQuizData({ quizSet, quizIndex });
-  console.log('quizIndex', quizIndex);
+  const router = useRouter();
 
   const handleNextQuiz = () => {
     nextQuiz();
@@ -30,6 +31,10 @@ export const useGame = ({ quizSet }: { quizSet: StrpItem<QuizSet> }) => {
     setInput(value);
 
     if (value.length >= 3) {
+      if (value === '쉬운데') {
+        session.setSoEasy();
+        return router.replace(`/q/${quizSet.id}`);
+      }
       setStatus(value === currentQuiz.answer ? 'OK' : 'NO');
     }
   };
@@ -84,7 +89,7 @@ function useGameTimeout({
     if (timerRefs.current) {
       timerRefs.current.timeOver = setTimeout(() => {
         setTimeOver(true);
-      }, 6000 * 1000);
+      }, 60 * 1000);
     }
 
     return () => {
@@ -144,9 +149,9 @@ function useQuizData({
         value,
         flip: true,
       }));
-    if (index > 5) {
+    Array.from({ length: 10 }).forEach((_) => {
       syllables.sort(() => (Math.random() > 0.5 ? 1 : -1));
-    }
+    });
 
     return {
       ...quizzes[index].attributes,

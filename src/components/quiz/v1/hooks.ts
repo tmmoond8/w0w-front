@@ -4,12 +4,14 @@ import { StrpItem, QuizSet, Quiz } from 'src/types';
 import ga from 'src/libs/ga';
 import APIS from 'src/apis';
 import storage from 'src/libs/storage';
+import session from 'src/libs/session';
 
 export const useGame = ({ quizSet }: { quizSet: StrpItem<QuizSet> }) => {
   const [status, setStatus] = React.useState<null | 'OK' | 'NO'>(null);
   const [quizIndex, nextQuiz] = React.useReducer((index) => index + 1, 0);
   const [input, setInput] = React.useState('');
   const { quizzes, currentQuiz } = useQuizData({ quizSet, quizIndex });
+  const router = useRouter();
 
   const handleNextQuiz = () => {
     nextQuiz();
@@ -29,6 +31,10 @@ export const useGame = ({ quizSet }: { quizSet: StrpItem<QuizSet> }) => {
     setInput(value);
 
     if (value.length >= 3) {
+      if (value === '쉬운데') {
+        session.setSoEasy();
+        return router.reload();
+      }
       setStatus(value === currentQuiz.answer ? 'OK' : 'NO');
     }
   };

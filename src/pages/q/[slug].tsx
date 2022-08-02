@@ -23,7 +23,7 @@ export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
   return (
     <>
       <Meta
-        title={quizSet.attributes.ogTitle}
+        title={`도전! ${quizSet.attributes.ogTitle}`}
         description={quizSet.attributes.ogDescription}
         url={`${ENVS.NEXT_PUBLIC_URL}/q/${slug}`}
       />

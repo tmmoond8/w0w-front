@@ -20,7 +20,7 @@ export default function GamePad({ currentQuiz, handleClickSyllable }: Props) {
       p="0 12px"
       gap="10px"
     >
-      {currentQuiz.syllables.map(({ key, value, flip }) => (
+      {currentQuiz.syllables.map(({ key, value }) => (
         <C.GridItem
           key={key}
           w="60px"
@@ -55,18 +55,6 @@ export default function GamePad({ currentQuiz, handleClickSyllable }: Props) {
           </C.Button>
         </C.GridItem>
       ))}
-      <C.Box>
-        <C.Flex
-          position="absolute"
-          __css={{
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
-          }}
-        >
-          aaa
-        </C.Flex>
-        <C.Flex>bbb</C.Flex>
-      </C.Box>
     </C.Grid>
   );
 }

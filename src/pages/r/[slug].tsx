@@ -44,7 +44,7 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
     <>
       <Header />
       <Meta
-        title={`${quizResult.nickname} 님의 우영우 게임 결과는 ${quizResult.score}개`}
+        title={`${quizResult.nickname} 님의 ${quizSet.title} 결과는 ${quizResult.score}개`}
         description={`${quizResult.nickname} 님보다 더 많이 맞힐 수 있다면 도전!!! #우영우게임 #우영우`}
         url={`${ENVS.NEXT_PUBLIC_URL}/r/${quizResult.id}`}
         image={resultOgs[quizResult.score]}
@@ -140,7 +140,7 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
                   filter: 'brightness(95%)',
                   bgColor: '#F0EBE1 !important',
                 }}
-                text={`${quizResult.nickname} 님의 우영우 게임 점수는 ${quizResult.score}개`}
+                text={`${quizResult.nickname} 님의 ${quizSet.title} 점수는 ${quizResult.score}개`}
                 url={globalThis.location?.href}
               >
                 친구에게 공유
