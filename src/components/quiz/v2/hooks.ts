@@ -154,7 +154,7 @@ function useQuizData({
         key: (Math.random() * 1234).toString(36),
         value,
       }));
-    Array.from({ length: 30 }).forEach(() => {
+    Array.from({ length: 5 }).forEach(() => {
       syllables.sort(() => (Math.random() > 0.5 ? 1 : -1));
     });
 
