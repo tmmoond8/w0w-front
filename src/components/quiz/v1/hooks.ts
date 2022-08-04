@@ -33,7 +33,13 @@ export const useGame = ({ quizSet }: { quizSet: StrpItem<QuizSet> }) => {
     if (value.length >= 3) {
       if (value === '쉬운데') {
         session.setSoEasy();
-        return router.reload();
+        setTimeout(() => {
+          router.replace('/q/3', '/q/3');
+        }, 2000);
+        setTimeout(() => {
+          globalThis.location.reload();
+        }, 2500);
+        return;
       }
       setStatus(value === currentQuiz.answer ? 'OK' : 'NO');
     }

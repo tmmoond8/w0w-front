@@ -5,13 +5,26 @@ import type { Quiz } from 'src/types';
 interface Props {
   currentQuiz: Omit<Quiz, 'syllables'> & {
     id: number;
-    syllables: { key: string; value: string; flip: boolean }[];
+    syllables: { key: string; value: string }[];
   };
+  quizIndex: number;
   handleClickSyllable: (v: string) => void;
 }
 
-export default function GamePad({ currentQuiz, handleClickSyllable }: Props) {
-  const [isFront, setIsFront] = React.useState(false);
+export default function GamePad({
+  currentQuiz,
+  quizIndex,
+  handleClickSyllable,
+}: Props) {
+  const [flips, setFlips] = React.useState<boolean[]>([]);
+
+  React.useEffect(() => {
+    if (quizIndex > 5) {
+      const random = Math.random().toString(2).split('.').pop() as string;
+      setFlips(currentQuiz.syllables.map((_, i) => random[i] === '1'));
+    }
+  }, [currentQuiz, quizIndex]);
+
   return (
     <C.Grid
       templateColumns={`repeat(${currentQuiz.syllables.length / 2}, 60px)`}
@@ -20,12 +33,12 @@ export default function GamePad({ currentQuiz, handleClickSyllable }: Props) {
       p="0 12px"
       gap="10px"
     >
-      {currentQuiz.syllables.map(({ key, value }) => (
+      {currentQuiz.syllables.map(({ key, value }, index) => (
         <C.GridItem
           key={key}
           w="60px"
           h="60px"
-          transform={`rotateY(${isFront ? 180 : 0}deg)`}
+          transform={`rotateY(${flips[index] ? 180 : 0}deg)`}
           transition="transform 0.8s"
           __css={{
             transformStyle: 'preserve-3d',
@@ -35,7 +48,7 @@ export default function GamePad({ currentQuiz, handleClickSyllable }: Props) {
             w="100%"
             h="100%"
             colorScheme="gray"
-            bgColor="#9D949126"
+            bgColor={flips[index] ? '#9D949176' : '#9D949126'}
             fontFamily="'Gamja Flower'"
             borderRadius="12px"
             fontSize="28px"
@@ -47,7 +60,10 @@ export default function GamePad({ currentQuiz, handleClickSyllable }: Props) {
               bgColor: '#D1C6C2',
             }}
             onClick={() => {
-              setIsFront(!isFront);
+              if (flips[index]) {
+                setFlips(flips.map((b, i) => (i === index ? false : b)));
+                return;
+              }
               handleClickSyllable(value);
             }}
           >

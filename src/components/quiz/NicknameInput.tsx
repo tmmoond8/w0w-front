@@ -16,7 +16,7 @@ export default function NicknameInput({
 
   return (
     <C.Flex as="div" flexDirection="column" position="relative" flex="1">
-      <Header />
+      <Header badgeText={quizId === 3 ? '우당탕탕' : undefined} />
       <C.Box p="16px 16px 0 16px">
         <C.Text fontFamily="'Gamja Flower'">닉네임을 알려주세요 🐳</C.Text>
         <C.InputGroup>

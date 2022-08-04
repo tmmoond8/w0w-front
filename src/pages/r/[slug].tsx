@@ -42,7 +42,7 @@ export default function ResultPage({ quizResult, quizSet }: Props) {
   }
   return (
     <>
-      <Header />
+      <Header badgeText={quizResult.quizId === 3 ? '우당탕탕' : undefined} />
       <Meta
         title={`${quizResult.nickname} 님의 ${quizSet.title} 결과는 ${quizResult.score}개`}
         description={`${quizResult.nickname} 님보다 더 많이 맞힐 수 있다면 도전!!! #우영우게임 #우영우`}

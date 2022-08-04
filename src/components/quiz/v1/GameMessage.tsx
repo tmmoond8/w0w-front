@@ -6,7 +6,11 @@ const fadeIn = C.keyframes`
     to { opacity: 1};
   `;
 
-export default function GameClear() {
+interface Props {
+  message: string;
+}
+
+export default function GameMessage({ message }: Props) {
   return (
     <C.Flex
       position="absolute"
@@ -25,7 +29,7 @@ export default function GameClear() {
         textAlign="center"
         fontFamily="'Gamja Flower'"
       >
-        모든 문제를 풀었어요!~ 👏
+        {message}
       </C.Text>
     </C.Flex>
   );

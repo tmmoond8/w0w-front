@@ -4,6 +4,7 @@ import { Buttons, Logo, ShareButton } from 'src/components';
 import mainImage from 'src/assets/main.png';
 import * as C from '@chakra-ui/react';
 import ga from 'src/libs/ga';
+import session from 'src/libs/session';
 
 export default function Intro({
   quizId,
@@ -14,6 +15,14 @@ export default function Intro({
   url: string;
   next: () => void;
 }) {
+  const [isHardMode, setIsHardMode] = React.useState(false);
+
+  React.useEffect(() => {
+    if (session.getSoEasy()) {
+      setIsHardMode(true);
+    }
+  }, []);
+
   return (
     <C.Flex
       as="div"
@@ -56,8 +65,22 @@ export default function Intro({
         borderTopLeftRadius="8px"
         borderTopRightRadius="8px"
       >
-        <C.Center>
+        <C.Center position="relative">
           <Logo width="96px" />
+          {isHardMode && quizId === 3 && (
+            <C.Text
+              position="absolute"
+              left="calc(50% + 50px)"
+              p="0 10px"
+              bgColor="#E62E6B"
+              color="white"
+              fontFamily="'Gamja Flower'"
+              borderRadius="12px"
+              transform="rotate(-10deg)"
+            >
+              우당탕탕
+            </C.Text>
+          )}
         </C.Center>
         <Buttons.CTA
           w="100%"

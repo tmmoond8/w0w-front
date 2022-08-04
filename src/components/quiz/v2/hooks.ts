@@ -136,7 +136,13 @@ function useQuizData({
 }) {
   const quizzes = React.useMemo(() => {
     const _quizzes = [...quizSet.attributes.quizzes.data];
-    _quizzes.sort((a, b) => a.attributes.weight - b.attributes.weight);
+    _quizzes.sort((a, b) => {
+      if (b.attributes.syllables.length < a.attributes.syllables.length) {
+        return 1;
+      }
+
+      return Math.random() - 0.5;
+    });
     return _quizzes;
   }, [quizSet]);
 
@@ -147,9 +153,8 @@ function useQuizData({
       .map((value) => ({
         key: (Math.random() * 1234).toString(36),
         value,
-        flip: true,
       }));
-    Array.from({ length: 10 }).forEach(() => {
+    Array.from({ length: 30 }).forEach(() => {
       syllables.sort(() => (Math.random() > 0.5 ? 1 : -1));
     });
 

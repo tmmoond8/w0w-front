@@ -5,8 +5,9 @@ import { Header } from 'src/components';
 import RestTime from './RestTime';
 import GameDisplay from './GameDisplay';
 import GamePad from './GamePad';
-import GameClear from './GameClear';
+import GameMessage from './GameMessage';
 import { useGame } from './hooks';
+import session from 'src/libs/session';
 
 interface Props {
   quizSet: StrpItem<QuizSet>;
@@ -26,9 +27,14 @@ export default function Quiz({ quizSet }: Props) {
 
   return (
     <C.Flex display="flex" flexDirection="column" flex="1" h="100%">
-      <Header />
+      <Header badgeText={quizSet.id === 3 ? '우당탕탕' : undefined} />
       <RestTime />
-      {quizIndex >= quizzes.length && <GameClear />}
+      {quizIndex >= quizzes.length && (
+        <GameMessage message="모든 문제를 풀었어요!~ 👏" />
+      )}
+      {quizSet.id === 1 && session.getSoEasy() && (
+        <GameMessage message="쉽다는 증거 있습니까? 👀" />
+      )}
       <C.Center flexDirection="column" h="100%">
         <GameDisplay input={input} status={status} />
         <C.Box h="48px" />

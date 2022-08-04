@@ -26,7 +26,7 @@ export default function Quiz({ quizSet }: Props) {
 
   return (
     <C.Flex display="flex" flexDirection="column" flex="1" h="100%">
-      <Header />
+      <Header badgeText={quizSet.id === 3 ? '우당탕탕' : undefined} />
       <RestTime />
       {quizIndex >= quizzes.length && <GameClear />}
       <C.Center flexDirection="column" h="100%">
@@ -34,6 +34,7 @@ export default function Quiz({ quizSet }: Props) {
         <C.Box h="48px" />
         <GamePad
           currentQuiz={currentQuiz}
+          quizIndex={quizIndex}
           handleClickSyllable={handleClickSyllable}
         />
       </C.Center>

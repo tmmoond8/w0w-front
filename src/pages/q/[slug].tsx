@@ -5,6 +5,7 @@ import { Footer, NicknameInput, Quiz, Meta, Intro } from 'src/components';
 import APIS from 'src/apis';
 import { QuizSet, StrpItem } from 'src/types';
 import ENVS from 'src/libs/envs';
+import session from 'src/libs/session';
 
 export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
   const [step, setStep] = React.useState(0);
@@ -19,6 +20,12 @@ export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
       setStep(parseInt(router.query.step as string));
     }
   }, [router.query]);
+
+  React.useEffect(() => {
+    if (quizSet.id === 3 && !session.getSoEasy()) {
+      router.replace('/q/1');
+    }
+  }, []);
 
   return (
     <>
