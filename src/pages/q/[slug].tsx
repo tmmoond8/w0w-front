@@ -5,7 +5,6 @@ import { Footer, NicknameInput, Quiz, Meta, Intro } from 'src/components';
 import APIS from 'src/apis';
 import { QuizSet, StrpItem } from 'src/types';
 import ENVS from 'src/libs/envs';
-import session from 'src/libs/session';
 
 export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
   const [step, setStep] = React.useState(0);
@@ -21,12 +20,6 @@ export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
     }
   }, [router.query]);
 
-  React.useEffect(() => {
-    if (quizSet.id === 3 && !session.getSoEasy()) {
-      router.replace('/q/1');
-    }
-  }, []);
-
   return (
     <>
       <Meta
@@ -40,9 +33,16 @@ export default function QuizPage({ quizSet }: { quizSet: StrpItem<QuizSet> }) {
             quizId={quizSet.id}
             next={next}
             url={`${ENVS.NEXT_PUBLIC_URL}/q/${slug}`}
+            gameMode={quizSet.attributes.gameMode}
           />
         )}
-        {step == 1 && <NicknameInput quizId={quizSet.id} next={next} />}
+        {step == 1 && (
+          <NicknameInput
+            quizId={quizSet.id}
+            next={next}
+            gameMode={quizSet.attributes.gameMode}
+          />
+        )}
         {step == 2 && quizSet && <Quiz quizSet={quizSet} />}
       </C.Box>
       <Footer />

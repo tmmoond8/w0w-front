@@ -1,12 +1,13 @@
 import * as C from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import { Logo } from 'src/components';
+import { GameMode } from 'src/types';
 
 interface Props {
-  badgeText?: string;
+  gameMode: GameMode;
 }
 
-export default function Header({ badgeText }: Props) {
+export default function Header({ gameMode }: Props) {
   const router = useRouter();
   return (
     <C.Flex
@@ -18,7 +19,7 @@ export default function Header({ badgeText }: Props) {
       p="10px 20px"
     >
       <Logo width="60px" mt="8px" onClick={() => router.replace('/')} />
-      {badgeText && (
+      {gameMode !== '일반' && (
         <C.Text
           position="absolute"
           left="84px"
@@ -30,7 +31,7 @@ export default function Header({ badgeText }: Props) {
           borderRadius="12px"
           transform="rotate(-10deg)"
         >
-          {badgeText}
+          {gameMode}
         </C.Text>
       )}
     </C.Flex>

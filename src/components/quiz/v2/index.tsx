@@ -26,7 +26,7 @@ export default function Quiz({ quizSet }: Props) {
 
   return (
     <C.Flex display="flex" flexDirection="column" flex="1" h="100%">
-      <Header badgeText={quizSet.id === 3 ? '우당탕탕' : undefined} />
+      <Header gameMode={quizSet.attributes.gameMode} />
       <RestTime />
       {quizIndex >= quizzes.length && <GameClear />}
       <C.Center flexDirection="column" h="100%">

@@ -3,12 +3,15 @@ import * as C from '@chakra-ui/react';
 import { Buttons, Header } from 'src/components';
 import storage from 'src/libs/storage';
 import ga from 'src/libs/ga';
+import { GameMode } from 'src/types';
 
 export default function NicknameInput({
   quizId,
+  gameMode,
   next,
 }: {
   quizId: number;
+  gameMode: GameMode;
   next: () => void;
 }) {
   const [nickname, setNickname] = React.useState(storage.getNickname() ?? '');
@@ -16,7 +19,7 @@ export default function NicknameInput({
 
   return (
     <C.Flex as="div" flexDirection="column" position="relative" flex="1">
-      <Header badgeText={quizId === 3 ? '우당탕탕' : undefined} />
+      <Header gameMode={gameMode} />
       <C.Box p="16px 16px 0 16px">
         <C.Text fontFamily="'Gamja Flower'">닉네임을 알려주세요 🐳</C.Text>
         <C.InputGroup>

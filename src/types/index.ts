@@ -45,6 +45,7 @@ export interface QuizSet {
   updatedAt: string;
   publishedAt: string;
   quizzes: StrpInnerList<Quiz>;
+  gameMode: GameMode;
 }
 
 export interface QuizResult {
@@ -55,3 +56,5 @@ export interface QuizResult {
   updatedAt: string;
   publishedAt: string;
 }
+
+export type GameMode = '일반' | '우당탕탕' | '권모술수';
