@@ -94,7 +94,7 @@ export default function Impediments({ syllablesSize }: Props) {
           w="60px"
           height="60px"
           transform={getTranslate3d(point)}
-          transition="transform 0.3s ease-in"
+          transition="transform 0.15s ease-in"
           key={point.key}
           cursor="pointer"
           onClick={() => {
